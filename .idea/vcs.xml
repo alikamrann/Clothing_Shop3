@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Compose-Bottom-Navigation" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ComposeApp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/DataBinding2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Hilt" vcs="Git" />
