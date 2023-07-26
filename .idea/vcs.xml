@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ComposeApp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DataBinding2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Hilt" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/NewsApp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/StopWatchDemo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/TMDBClient" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/UnitConverterApp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/music_player/RetroMusicPlayer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/music_player/symphony" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/nowinandroid" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/retro_music/RetroMusicPlayer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/telegram" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tivi/tivi" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tivi2/tivi2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vocab learn" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vocab learn/lingo_front" vcs="Git" />
+  </component>
+</project>

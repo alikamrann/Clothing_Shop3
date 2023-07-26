@@ -1,0 +1,47 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 5,
+    "identityHash": "3089d68c1669184be92c92bf53c9e219",
+    "entities": [
+      {
+        "tableName": "subscriber_data_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`subscriber_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `subscriber_name` TEXT NOT NULL, `subscriber_address` TEXT DEFAULT 'st1')",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "subscriber_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "subscriber_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "subscriber_address",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "'st1'"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "subscriber_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3089d68c1669184be92c92bf53c9e219')"
+    ]
+  }
+}
