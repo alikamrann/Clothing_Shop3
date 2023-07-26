@@ -1,12 +1,12 @@
-package compose.material.theme.bottomnav
+package com.alikamran.clothingshop.bottomnav
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import compose.material.theme.screens.HomeScreen
-import compose.material.theme.screens.ProfileScreen
-import compose.material.theme.screens.ReportScreen
+import com.alikamran.clothingshop.screens.HomeScreen
+import com.alikamran.clothingshop.screens.ProfileScreen
+import com.alikamran.clothingshop.screens.ReportScreen
 
 @Composable
 fun BottomNavGraph(

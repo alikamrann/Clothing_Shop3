@@ -19,15 +19,8 @@ package com.alikamran.myapplication.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import com.google.samples.apps.nowinandroid.feature.bookmarks.navigation.bookmarksScreen
-import com.google.samples.apps.nowinandroid.feature.foryou.navigation.forYouNavigationRoute
-import com.google.samples.apps.nowinandroid.feature.foryou.navigation.forYouScreen
-import com.google.samples.apps.nowinandroid.feature.interests.navigation.interestsGraph
-import com.google.samples.apps.nowinandroid.feature.search.navigation.searchScreen
-import com.google.samples.apps.nowinandroid.feature.topic.navigation.navigateToTopic
-import com.google.samples.apps.nowinandroid.feature.topic.navigation.topicScreen
-import com.alikamran.myapplication.navigation.TopLevelDestination.INTERESTS
-import com.google.samples.apps.nowinandroid.ui.NiaAppState
+import com.alikamran.clothingshop.ui.NiaAppState
+
 
 /**
  * Top-level navigation graph. Navigation is organized as explained at
@@ -41,7 +34,7 @@ fun NiaNavHost(
     appState: NiaAppState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
-    startDestination: String = forYouNavigationRoute,
+    startDestination: String /*= forYouNavigationRoute,*/
 ) {
     val navController = appState.navController
     NavHost(
@@ -50,26 +43,26 @@ fun NiaNavHost(
         modifier = modifier,
     ) {
         // TODO: handle topic clicks from each top level destination
-        forYouScreen(onTopicClick = {})
-        bookmarksScreen(
-            onTopicClick = navController::navigateToTopic,
-            onShowSnackbar = onShowSnackbar,
-        )
-        searchScreen(
-            onBackClick = navController::popBackStack,
-            onInterestsClick = { appState.navigateToTopLevelDestination(INTERESTS) },
-            onTopicClick = navController::navigateToTopic,
-        )
-        interestsGraph(
-            onTopicClick = { topicId ->
-                navController.navigateToTopic(topicId)
-            },
-            nestedGraphs = {
-                topicScreen(
-                    onBackClick = navController::popBackStack,
-                    onTopicClick = {},
-                )
-            },
-        )
+//        forYouScreen(onTopicClick = {})
+//        bookmarksScreen(
+//            onTopicClick = navController::navigateToTopic,
+//            onShowSnackbar = onShowSnackbar,
+//        )
+//        searchScreen(
+//            onBackClick = navController::popBackStack,
+//            onInterestsClick = { appState.navigateToTopLevelDestination(TopLevelDestination.INTERESTS) },
+//            onTopicClick = navController::navigateToTopic,
+//        )
+//        interestsGraph(
+//            onTopicClick = { topicId ->
+//                navController.navigateToTopic(topicId)
+//            },
+//            nestedGraphs = {
+//                topicScreen(
+//                    onBackClick = navController::popBackStack,
+//                    onTopicClick = {},
+//                )
+//            },
+//        )
     }
 }

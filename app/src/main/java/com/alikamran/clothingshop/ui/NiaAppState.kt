@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.nowinandroid.ui
+package com.alikamran.clothingshop.ui
 
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -22,28 +22,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navOptions
-import androidx.tracing.trace
-import com.google.samples.apps.nowinandroid.core.data.repository.UserNewsResourceRepository
-import com.google.samples.apps.nowinandroid.core.data.util.NetworkMonitor
-import com.google.samples.apps.nowinandroid.core.ui.TrackDisposableJank
-import com.google.samples.apps.nowinandroid.feature.bookmarks.navigation.bookmarksRoute
-import com.google.samples.apps.nowinandroid.feature.bookmarks.navigation.navigateToBookmarks
-import com.google.samples.apps.nowinandroid.feature.foryou.navigation.forYouNavigationRoute
-import com.google.samples.apps.nowinandroid.feature.foryou.navigation.navigateToForYou
-import com.google.samples.apps.nowinandroid.feature.interests.navigation.interestsRoute
-import com.google.samples.apps.nowinandroid.feature.interests.navigation.navigateToInterestsGraph
-import com.google.samples.apps.nowinandroid.feature.search.navigation.navigateToSearch
-import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination
-import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.BOOKMARKS
-import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.FOR_YOU
-import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.INTERESTS
+import com.alikamran.data.NetworkMonitor
+import com.alikamran.myapplication.navigation.TopLevelDestination
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -55,24 +40,24 @@ import kotlinx.coroutines.flow.stateIn
 fun rememberNiaAppState(
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
-    userNewsResourceRepository: UserNewsResourceRepository,
+//    userNewsResourceRepository: UserNewsResourceRepository,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navController: NavHostController = rememberNavController(),
 ): NiaAppState {
-    NavigationTrackingSideEffect(navController)
+//    NavigationTrackingSideEffect(navController)
     return remember(
         navController,
         coroutineScope,
         windowSizeClass,
         networkMonitor,
-        userNewsResourceRepository,
+//        userNewsResourceRepository,
     ) {
         NiaAppState(
             navController,
             coroutineScope,
             windowSizeClass,
             networkMonitor,
-            userNewsResourceRepository,
+//            userNewsResourceRepository,
         )
     }
 }
@@ -83,7 +68,7 @@ class NiaAppState(
     val coroutineScope: CoroutineScope,
     val windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
-    userNewsResourceRepository: UserNewsResourceRepository,
+//    userNewsResourceRepository: UserNewsResourceRepository,
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController
@@ -91,9 +76,9 @@ class NiaAppState(
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
-            forYouNavigationRoute -> FOR_YOU
-            bookmarksRoute -> BOOKMARKS
-            interestsRoute -> INTERESTS
+//            forYouNavigationRoute -> TopLevelDestination.FOR_YOU
+//            bookmarksRoute -> TopLevelDestination.BOOKMARKS
+//            interestsRoute -> TopLevelDestination.INTERESTS
             else -> null
         }
 
@@ -110,28 +95,28 @@ class NiaAppState(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = false,
         )
-
+}
     /**
      * Map of top level destinations to be used in the TopBar, BottomBar and NavRail. The key is the
      * route.
      */
-    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
+//    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
 
     /**
      * The top level destinations that have unread news resources.
      */
-    val topLevelDestinationsWithUnreadResources: StateFlow<Set<TopLevelDestination>> =
-        userNewsResourceRepository.observeAllForFollowedTopics()
-            .combine(userNewsResourceRepository.observeAllBookmarked()) { forYouNewsResources, bookmarkedNewsResources ->
-                setOfNotNull(
-                    FOR_YOU.takeIf { forYouNewsResources.any { !it.hasBeenViewed } },
-                    BOOKMARKS.takeIf { bookmarkedNewsResources.any { !it.hasBeenViewed } },
-                )
-            }.stateIn(
-                coroutineScope,
-                SharingStarted.WhileSubscribed(5_000),
-                initialValue = emptySet(),
-            )
+//    val topLevelDestinationsWithUnreadResources: StateFlow<Set<TopLevelDestination>> =
+//        userNewsResourceRepository.observeAllForFollowedTopics()
+//            .combine(userNewsResourceRepository.observeAllBookmarked()) { forYouNewsResources, bookmarkedNewsResources ->
+//                setOfNotNull(
+//                    FOR_YOU.takeIf { forYouNewsResources.any { !it.hasBeenViewed } },
+//                    BOOKMARKS.takeIf { bookmarkedNewsResources.any { !it.hasBeenViewed } },
+//                )
+//            }.stateIn(
+//                coroutineScope,
+//                SharingStarted.WhileSubscribed(5_000),
+//                initialValue = emptySet(),
+//            )
 
     /**
      * UI logic for navigating to a top level destination in the app. Top level destinations have
@@ -140,49 +125,49 @@ class NiaAppState(
      *
      * @param topLevelDestination: The destination the app needs to navigate to.
      */
-    fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
-        trace("Navigation: ${topLevelDestination.name}") {
-            val topLevelNavOptions = navOptions {
-                // Pop up to the start destination of the graph to
-                // avoid building up a large stack of destinations
-                // on the back stack as users select items
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                // Avoid multiple copies of the same destination when
-                // reselecting the same item
-                launchSingleTop = true
-                // Restore state when reselecting a previously selected item
-                restoreState = true
-            }
-
-            when (topLevelDestination) {
-                FOR_YOU -> navController.navigateToForYou(topLevelNavOptions)
-                BOOKMARKS -> navController.navigateToBookmarks(topLevelNavOptions)
-                INTERESTS -> navController.navigateToInterestsGraph(topLevelNavOptions)
-            }
-        }
-    }
-
-    fun navigateToSearch() {
-        navController.navigateToSearch()
-    }
-}
+//    fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
+//        trace("Navigation: ${topLevelDestination.name}") {
+//            val topLevelNavOptions = navOptions {
+//                // Pop up to the start destination of the graph to
+//                // avoid building up a large stack of destinations
+//                // on the back stack as users select items
+//                popUpTo(navController.graph.findStartDestination().id) {
+//                    saveState = true
+//                }
+//                // Avoid multiple copies of the same destination when
+//                // reselecting the same item
+//                launchSingleTop = true
+//                // Restore state when reselecting a previously selected item
+//                restoreState = true
+//            }
+//
+//            when (topLevelDestination) {
+//                FOR_YOU -> navController.navigateToForYou(topLevelNavOptions)
+//                BOOKMARKS -> navController.navigateToBookmarks(topLevelNavOptions)
+//                INTERESTS -> navController.navigateToInterestsGraph(topLevelNavOptions)
+//            }
+//        }
+//    }
+//
+//    fun navigateToSearch() {
+//        navController.navigateToSearch()
+//    }
+//}
 
 /**
  * Stores information about navigation events to be used with JankStats
  */
-@Composable
-private fun NavigationTrackingSideEffect(navController: NavHostController) {
-    TrackDisposableJank(navController) { metricsHolder ->
-        val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
-            metricsHolder.state?.putState("Navigation", destination.route.toString())
-        }
-
-        navController.addOnDestinationChangedListener(listener)
-
-        onDispose {
-            navController.removeOnDestinationChangedListener(listener)
-        }
-    }
-}
+//@Composable
+//private fun NavigationTrackingSideEffect(navController: NavHostController) {
+//    TrackDisposableJank(navController) { metricsHolder ->
+//        val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
+//            metricsHolder.state?.putState("Navigation", destination.route.toString())
+//        }
+//
+//        navController.addOnDestinationChangedListener(listener)
+//
+//        onDispose {
+//            navController.removeOnDestinationChangedListener(listener)
+//        }
+//    }
+//}
